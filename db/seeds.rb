@@ -1,6 +1,10 @@
 Order.destroy_all
 Sorcerer.destroy_all
 Item.destroy_all
+User.destroy_all
+
+user1 = User.create(name:"Nick", password: "123")
+user2 = User.create(name:"Lou", password: "123")
 
 sorcerer1 = Sorcerer.create(name:"Mordecai", skill:"fire")
 sorcerer2 = Sorcerer.create(name:"Gandalf", skill:"lightning")
