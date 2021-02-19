@@ -1,4 +1,4 @@
-# Potions and Lotions! 🧙‍♂️
+# Potions and Lotions! 🧙‍♂️ 🎃 🧙‍♀️
 Your destination for magical items and wicked wares. 
 
 ## For Your Information
