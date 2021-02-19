@@ -10,7 +10,7 @@ class Cli
         system "clear"
         puts "Welcome to:"
         title = Artii::Base.new(:font => "slant")
-        puts title.asciify("Potions and Lotions")
+        puts title.asciify("Potions and Lotions").green
         welcome_question
     end
 
@@ -39,11 +39,14 @@ class Cli
     end
 
     def menu
-        options = prompt.select("What would you like to do?:", ["Buy new item", "See your items"])
+        reset
+        options = prompt.select("What would you like to do?:", ["Buy new item", "See your items", "Exit"])
         if options == "Buy new item"
             buy_menu
-        else
+        elsif options == "See your items"
             view_item
+        else
+            exit!
         end
     end
 
@@ -52,14 +55,17 @@ class Cli
         # binding.pry
         if check_item[0]
             use_or_view = prompt.select("Would you like to view or use your items?:", ["View", "Use"])
+            # binding.pry
             if use_or_view == "View"
                 item_array = check_item.all.map {|purchase| purchase.item_id}
                 item_array.each {|id| puts Item.find(id).name}
+                sleep(3)
                 menu
             else
                 item_array = check_item.all.map {|purchase| purchase.item_id}
                 select_item = item_array.map {|id| Item.find(id).name}
-                use_item = prompt.select("Which item would you like to use?:", select_item)                
+                use_item = prompt.select("Which item would you like to use?:", select_item)
+                Item.find_by(name: use_item).destroy
             end
         else
             puts "You have no items yet"
@@ -109,28 +115,46 @@ class Cli
                     end   
                 end
             when "Rarity"
-                puts selected_item[0].rarity
+                puts @selected_item[0].rarity
                 know_more = prompt.yes?("Would you like to know anything else about the item?:")
                 if know_more
                     attribute
                 else
-                    puts "Time to buy or get out."
+                    buy_or_no = prompt.yes?("Time to buy or get out.")
+                    if buy_or_no
+                        buy_item = Order.create(sorcerer: @user[0], item:@selected_item[0])
+                        break
+                    else
+                        break
+                    end   
                 end
             when "Cast Cost"
-                puts selected_item[0].cast_cost
+                puts @selected_item[0].cast_cost
                 know_more = prompt.yes?("Would you like to know anything else about the item?:")
                 if know_more
                     attribute
                 else
-                    puts "Time to buy or get out."
+                    buy_or_no = prompt.yes?("Time to buy or get out.")
+                    if buy_or_no
+                        buy_item = Order.create(sorcerer: @user[0], item:@selected_item[0])
+                        break
+                    else
+                        break
+                    end   
                 end
             when "Price"
-                puts selected_item[0].price
+                puts @selected_item[0].price
                 know_more = prompt.yes?("Would you like to know anything else about the item?:")
                 if know_more
                     attribute
                 else
-                    puts "Time to buy or get out."
+                    buy_or_no = prompt.yes?("Time to buy or get out.")
+                    if buy_or_no
+                        buy_item = Order.create(sorcerer: @user[0], item:@selected_item[0])
+                        break
+                    else
+                        break
+                    end   
                 end
             end
         end 
