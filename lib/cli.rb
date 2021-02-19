@@ -1,6 +1,6 @@
 
 class Cli
-
+    
 
     def prompt
         TTY::Prompt.new(symbols: {marker: '👺'})
@@ -11,22 +11,31 @@ class Cli
         puts "Welcome to:"
         title = Artii::Base.new(:font => "slant")
         puts title.asciify("Potions and Lotions").green
+        pid = fork{ exec 'afplay', './music/potions-lotions.mp3' }
         welcome_question
     end
 
     def welcome_question
+        
         login = prompt.yes?("Are you a returning sorcerer?:")
         if login
             puts "Enter your name:"
             user_input = gets.chomp
             @user = Sorcerer.all.find do |sorcerer|
                 sorcerer.name == user_input
+            #         menu
+            #     else
+            #         puts "It looks like you have not been in yet"
+            #         sleep(3)
+            #         system('rake db:seed')
+            #         welcome_question
+            #     end
             end
         menu
         else
             puts "What is your name?:"
             name = gets.chomp
-            puts "What is you skill?:"
+            puts "What is your skill?:"
             skill = gets.chomp
             @user = Sorcerer.create(name: name, skill: skill)
             puts "Welcome #{name}"
@@ -46,6 +55,8 @@ class Cli
         elsif options == "See your items"
             view_item
         else
+            system('killall afplay')
+            abort
             exit!
         end
     end
@@ -70,17 +81,20 @@ class Cli
                 if use_item == "Amulet of the Drunkard"
                     system('clear')
                     puts "💀You are now so inebriated you can no longer use this app💀"
-                    sleep(2)
+                    sleep(5)
+                    system('killall afplay')
                     exit!
                 elsif use_item == "Eye of Newt"
                     system('clear')
                     puts "🐸You turned into a frog so you can't use this app🐸"
-                    sleep(2)
+                    sleep(5)
+                    system('killall afplay')
                     exit!
                 elsif use_item == "Broom of Flying"
                     system('clear')
                     puts "🚀Your app flew away... tough luck!🚀"
-                    sleep(2)
+                    sleep(5)
+                    system('killall afplay')
                     exit!
                 end
             end
@@ -103,7 +117,7 @@ class Cli
     def buy_menu
         puts "Welcome to my shop! Won't you check my wares?........"
         sleep(2)
-        puts "And be careful what you touch."
+        puts "👿And be careful what you touch.👿".red
         # all_items = Item.all.map {|item| item.name}
         # binding.pry my_hash = {item.name => item}
         item_hash = Item.all.map{|item| [item.name, item]}.to_h
