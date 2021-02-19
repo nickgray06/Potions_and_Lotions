@@ -74,12 +74,12 @@ class Cli
                     exit!
                 elsif use_item == "Eye of Newt"
                     system('clear')
-                    puts "You turned into a frog so you can't use this app"
+                    puts "🐸You turned into a frog so you can't use this app🐸"
                     sleep(2)
                     exit!
                 elsif use_item == "Broom of Flying"
                     system('clear')
-                    puts "Your app flew away... tough luck!"
+                    puts "🚀Your app flew away... tough luck!🚀"
                     sleep(2)
                     exit!
                 end
