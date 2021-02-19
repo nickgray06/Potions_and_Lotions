@@ -1,5 +1,3 @@
-require 'colorize'
-
 Order.destroy_all
 Sorcerer.destroy_all
 Item.destroy_all
