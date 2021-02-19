@@ -35,4 +35,4 @@ To begin clone the GitHub repo and run ' ruby runner.rb' from your terminal
 * Ability to challenge another wizard/warlock/witch in a spell battle
 
 ## Intro Video:
-[Intro Video](https://www.youtube.com)
+[Intro Video](https://youtu.be/kg-rH4laMjo)
